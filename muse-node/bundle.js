@@ -9,8 +9,21 @@ const graphTitles = Array.from(document.querySelectorAll('.electrode-item h3'));
 const canvases = Array.from(document.querySelectorAll('.electrode-item canvas'));
 const canvasCtx = canvases.map((canvas) => canvas.getContext('2d'));
 const blinkStatus = document.querySelector('#blinkStatus');
-console.log(blinkStatus.textContent)
 
+const neuralNetwork = ml5.neuralNetwork(4, 2);
+console.log(neuralNetwork)
+
+var recording = false
+
+window.record = function (){
+  recording = true
+}
+
+window.stop = function (){
+  recording = false
+}
+
+storedResults = [[],[],[],[]]
 
 // for each 15 element array returned by the eegReading, adjust the appropriate canvas with a 
 // histogram like plot
@@ -27,7 +40,7 @@ function plot(reading) {
   const height = canvas.height / 2.0;
   context.fillStyle = 'black';
   context.clearRect(0, 0, canvas.width, canvas.height);
- 
+  
   // loop through each eeg reading (15 per array) and create a rectangle cooresponding
   // to the appropriate voltage
   for (let i = 0; i < reading.samples.length; i++) {
@@ -41,9 +54,9 @@ function plot(reading) {
 }
 
 async function main() {
-
+  
   // initiate the web-bluetooth conection request
-
+  
   let client = new Muse.MuseClient();
   await client.connect();
   await client.start();
@@ -51,19 +64,21 @@ async function main() {
   client.eegReadings.subscribe(reading => {
     plot(reading);
     graphTitles[reading.electrode].textContent = Math.max.apply(null, reading.samples).toString()
-    console.log(reading.electrode)
     if(reading.electrode === 0){
-      if(Math.max.apply(null, reading.samples) >= 80){
+      if(Math.max.apply(null, reading.samples) >= 95){
         blinkStatus.textContent = "(>*.*)> Blink"
       }
       else {
         blinkStatus.textContent = "(>o.o)> Eyes Open"
       }
     }
+    if(recording === true){
+      storedResults[reading.electrode].push(Math.max.apply(null, reading.samples));
+    }
   });
   
   client.accelerometerData.subscribe(acceleration => {
-   //  console.log(acceleration);
+    return null
   });
 }
 
@@ -74,7 +89,9 @@ window.connect = function (){
   main();
 }
 
-
+window.showRecorded = function (){
+  console.log(storedResults)
+}
 },{"muse-js":5}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });

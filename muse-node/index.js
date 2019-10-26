@@ -13,6 +13,7 @@ const neuralNetwork = ml5.neuralNetwork(4, 2);
 console.log(neuralNetwork)
 
 var recording = false
+var finishedTraining = false
 
 window.record = function (){
   recording = true
@@ -88,6 +89,47 @@ window.connect = function (){
   main();
 }
 
+// log stored Results. For testing purposes
 window.showRecorded = function (){
   console.log(storedResults)
+}
+
+function createFeatures(resultsArray, classification) {
+  recording = false
+  for(let i = 0; i < 200; i+=1){
+    const x = resultsArray.map(electrode => (electrode[i]))
+    var y = [0., 0.]
+    y[classification] = 1.
+    console.log(x)
+    console.log(y)
+    neuralNetwork.data.addData(x, y)
+  }
+  storedResults  = [[],[],[],[]]
+}
+
+window.classify1 = function (){
+  createFeatures(storedResults, 1)
+  recording = false
+}
+
+window.classify0 = function(){
+  createFeatures(storedResults, 0)
+  recording = false
+}
+
+window.train = function (){
+  // normalize your data
+  neuralNetwork.data.normalize();
+  // train your model
+  neuralNetwork.train();
+  finishedTraining = true
+  neuralNetwork
+}
+
+window.predict = function(){
+  const x =  storedResults.map(electrode => (electrode[5])) 
+  neuralNetwork.predict( x, (err, results) => {
+    console.log(results);
+  })
+  storedResults = [[],[],[],[]]
 }

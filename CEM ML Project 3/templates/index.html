@@ -1,0 +1,156 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.min.js"></script>
+  <link rel="stylesheet" href="./static/css/style.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+  <div class='container main'>
+
+      <div class="row">
+          <div class="col-md-12 jumbotron text-center">
+            <h1>Reading the Brain</h1>
+            <p>Identifying Brain for Alcoholic Subject</p>
+          </div>
+        </div>
+    
+    <div class="row">
+
+      <div class='col-lg-6 box'>
+          <h3 class='text-success'>Brain Pattern for Subject:</h3> 
+          <div class="heatmap_avg" style="width:840px; height: 400px;">
+            <img src="static/pic/braincase.png" alt="">
+          </div>
+      </div>
+
+      <div class='col-lg-6 box'>
+
+          
+          <h3 class='text-success'>Actual Result:</h3> 
+          <div id="ACT"></div>
+          <hr>
+          <h3 class='text-success'>Neural Network:</h3> 
+          <div id="NN"></div>
+          <hr>
+          <h3 class='text-success'>1D Convolutional Neural Networks:</h3> 
+          <div id="CNN"></div>
+          <hr>
+          <h3 class='text-success'>Logistic Regression:</h3> 
+          <div id="LR"></div>
+      
+        </div>
+  
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class='col-lg-6 box'>
+      
+                <div class="col-md-3">
+                  <button id="btn_braina" type="button" class="btn btn-default">New Subject</button>
+                </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-12 jumbotron text-center">
+          <h1>Accelerometer & Gyroscope Data</h1>
+          <p>PHONE DATA: Predicting -> Stand, Walking, Running, Biking, Stairs-Up, Staird-Down </p>
+        </div>
+      </div>
+
+      <div class="row">
+
+          <div class='col-lg-6 box'>
+              <h3 class='text-success'>Subject Activity:</h3> 
+              <svg width="500" height="500">
+          </div>
+    
+          <div class='col-lg-6 box'>
+              <h3 class='text-success'>Actual Result:</h3> 
+              <div id="ACTP"></div>
+              <hr>
+              <h3 class='text-success'>Neural Network:</h3> 
+              <div id="NNP"></div>
+              <hr>
+              <h3 class='text-success'>LSTM - Recurrent Neural Network:</h3> 
+              <div id="LSTMP"></div>
+              <hr>
+            </div>
+      
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class='col-lg-6 box'>
+                    <div class="col-md-3">
+                      <button id="btn_phone" type="button" class="btn btn-default">New Subject Phone</button>
+                    </div>
+            </div>
+
+        </div>
+
+        <hr>
+    
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center">
+              <h1>Accelerometer & Gyroscope Data</h1>
+              <p>WATCH DATA: Predicting -> Stand, Walking, Running, Biking, Stairs-Up, Staird-Down </p>
+            </div>
+          </div>
+    
+          <div class="row">
+    
+              <div class='col-lg-6 box'>
+                  <h3 class='text-success'>Subject Activity:</h3> 
+                  <div id="IMGW">
+                       <svg width="500" height="500">
+                  </div>
+                </div>
+        
+              <div class='col-lg-6 box'>
+                  <h3 class='text-success'>Actual Result:</h3> 
+                  <div id="ACTW"></div>
+                  <hr>
+                  <h3 class='text-success'>Neural Network:</h3> 
+                  <div id="NNW"></div>
+                  <hr>
+                  <h3 class='text-success'>LSTM - Recurrent Neural Network:</h3> 
+                  <div id="LSTMW"></div>
+                  <hr>
+                </div>
+          
+            </div>
+
+            <hr>
+
+                <div class='col-lg-6 box'>
+                        <div class="col-md-3">
+                          <button id="btn_watch" type="button" class="btn btn-default">New Subject Watch</button>
+                        </div>
+                </div>
+            
+            <hr>
+            <hr>
+            <hr>
+    
+            </div>
+
+      <script src="static/js/script.js"></script>
+
+  </div>
+</body>
+</html>

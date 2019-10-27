@@ -9,7 +9,20 @@ const canvases = Array.from(document.querySelectorAll('.electrode-item canvas'))
 const canvasCtx = canvases.map((canvas) => canvas.getContext('2d'));
 const blinkStatus = document.querySelector('#blinkStatus');
 
-const neuralNetwork = ml5.neuralNetwork(4, 2);
+const networkParams = {
+  task: 'classification',
+  //activationHidden: 'sigmoid',
+  // activationOutput: 'sigmoid',
+  debug: true,
+  // learningRate: 0.25,
+  inputs: 4, // or the names of the data properties ['temperature', 'precipitation']
+  outputs: 2, // or the names of the data properties ['thermalComfort']
+  hiddenUnits: 10,
+  // modelMetrics: ['accuracy'],
+  // modelLoss: 'categoricalCrossentropy',
+  // modelOptimizer: 'adam',
+}
+const neuralNetwork = ml5.neuralNetwork(networkParams);
 console.log(neuralNetwork)
 
 var recording = false
@@ -73,7 +86,7 @@ async function main() {
       }
     }
     if(recording === true){
-      storedResults[reading.electrode].push(Math.max.apply(null, reading.samples));
+      storedResults[reading.electrode].push(Math.abs(Math.max.apply(null, reading.samples)));
     }
   });
   
@@ -98,8 +111,7 @@ function createFeatures(resultsArray, classification) {
   recording = false
   for(let i = 0; i < 200; i+=1){
     const x = resultsArray.map(electrode => (electrode[i]))
-    var y = [0., 0.]
-    y[classification] = 1.
+    var y = [classification]
     console.log(x)
     console.log(y)
     neuralNetwork.data.addData(x, y)
@@ -108,12 +120,12 @@ function createFeatures(resultsArray, classification) {
 }
 
 window.classify1 = function (){
-  createFeatures(storedResults, 1)
+  createFeatures(storedResults, "active")
   recording = false
 }
 
 window.classify0 = function(){
-  createFeatures(storedResults, 0)
+  createFeatures(storedResults, "rest")
   recording = false
 }
 
@@ -121,14 +133,25 @@ window.train = function (){
   // normalize your data
   neuralNetwork.data.normalize();
   // train your model
-  neuralNetwork.train();
+  
+  const trainingOptions={
+    batchSize: 24,
+    epochs: 500
+  }
+  function whileTraining(epoch, loss){
+    console.log(`epoch: ${epoch}, loss:${loss}`);
+  }
+  function doneTraining(){
+    console.log('done!');
+  }
+  neuralNetwork.train(trainingOptions, whileTraining, doneTraining)
+  
   finishedTraining = true
-  neuralNetwork
 }
 
 window.predict = function(){
   const x =  storedResults.map(electrode => (electrode[5])) 
-  neuralNetwork.predict( x, (err, results) => {
+  neuralNetwork.classify  ( x, (err, results) => {
     console.log(results);
   })
   storedResults = [[],[],[],[]]

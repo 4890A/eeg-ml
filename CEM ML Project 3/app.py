@@ -33,7 +33,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db/project3db.sqlite"
 
 #******************* KENT ****************************
-# user_and_pw = "user1:password"
+
 
 # engine_string = "postgresql://" + user_and_pw + "@proj3-database.c733pkfot2yr.us-east-2.rds.amazonaws.com:5432/data_db"
 

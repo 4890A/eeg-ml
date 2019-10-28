@@ -14,13 +14,13 @@ const networkParams = {
   //activationHidden: 'sigmoid',
   // activationOutput: 'sigmoid',
   debug: true,
-  // learningRate: 0.25,
+  learningRate: 4.,
   inputs: 4, // or the names of the data properties ['temperature', 'precipitation']
   outputs: 2, // or the names of the data properties ['thermalComfort']
-  hiddenUnits: 10,
+  hiddenUnits: 7,
   // modelMetrics: ['accuracy'],
-  // modelLoss: 'categoricalCrossentropy',
-  // modelOptimizer: 'adam',
+  modelLoss: 'categoricalCrossentropy',
+  modelOptimizer: 'adam',
 }
 const neuralNetwork = ml5.neuralNetwork(networkParams);
 console.log(neuralNetwork)
@@ -66,6 +66,23 @@ function plot(reading) {
   }
 }
 
+let CalculateRMS = function (arr) { 
+  
+    // Map will return another array with each  
+    // element corresponding to the elements of 
+    // the original array mapped according to 
+    // some relation 
+    let Squares = arr.map((val) => (val*val)); 
+  
+    // Function reduce the array to a value 
+    // Here, all the elements gets added to the first 
+    // element which acted as the accumulator initially. 
+    let Sum = Squares.reduce((acum, val) => (acum + val)); 
+  
+    Mean = Sum/arr.length; 
+    return Math.sqrt(Mean); 
+} 
+
 async function main() {
   
   // initiate the web-bluetooth conection request
@@ -76,7 +93,7 @@ async function main() {
   
   client.eegReadings.subscribe(reading => {
     plot(reading);
-    graphTitles[reading.electrode].textContent = Math.max.apply(null, reading.samples).toString()
+    graphTitles[reading.electrode].textContent = CalculateRMS(reading.samples).toString()
     if(reading.electrode === 0){
       if(Math.max.apply(null, reading.samples) >= 95){
         blinkStatus.textContent = "(>*.*)> Blink"
@@ -86,12 +103,13 @@ async function main() {
       }
     }
     if(recording === true){
-      storedResults[reading.electrode].push(Math.abs(Math.max.apply(null, reading.samples)));
+      // storedResults[reading.electrode].push(Math.abs(Math.max.apply(null, reading.samples)));
+      storedResults[reading.electrode].push(CalculateRMS(reading.samples))
     }
   });
   
   client.accelerometerData.subscribe(acceleration => {
-    return null
+    // console.log(acceleration)
   });
 }
 
@@ -109,7 +127,7 @@ window.showRecorded = function (){
 
 function createFeatures(resultsArray, classification) {
   recording = false
-  for(let i = 0; i < 200; i+=1){
+  for(let i = 0; i < resultsArray[3].length; i+=1){
     const x = resultsArray.map(electrode => (electrode[i]))
     var y = [classification]
     console.log(x)
@@ -120,12 +138,12 @@ function createFeatures(resultsArray, classification) {
 }
 
 window.classify1 = function (){
-  createFeatures(storedResults, "active")
+  createFeatures(storedResults, "rest")
   recording = false
 }
 
 window.classify0 = function(){
-  createFeatures(storedResults, "rest")
+  createFeatures(storedResults, "active")
   recording = false
 }
 
@@ -135,8 +153,8 @@ window.train = function (){
   // train your model
   
   const trainingOptions={
-    batchSize: 24,
-    epochs: 500
+    batchSize: 128,
+    epochs: 4000
   }
   function whileTraining(epoch, loss){
     console.log(`epoch: ${epoch}, loss:${loss}`);
@@ -149,10 +167,43 @@ window.train = function (){
   finishedTraining = true
 }
 
-window.predict = function(){
-  const x =  storedResults.map(electrode => (electrode[5])) 
-  neuralNetwork.classify  ( x, (err, results) => {
-    console.log(results);
+function average(arr) {
+  var sum = 0.
+  arr.forEach((value, index) => {sum += value})
+  sum = sum / arr.length
+  return sum
+}
+
+function getProbabilities(){
+  
+  recording = false
+  var classificationArrayActive = []
+  var classificationArrayRest = []
+  
+  storedResults[3].forEach((value, index) => {
+    const x = storedResults.map(electrode => (electrode[index]))
+    neuralNetwork.classify(x, (err, results) => {
+      classificationArrayActive.push(results[0].confidence)
+      classificationArrayRest.push(results[1].confidence)
+    })
   })
-  storedResults = [[],[],[],[]]
+  return [classificationArrayActive, classificationArrayRest]
+}
+
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+window.predict = function(){
+  value = getProbabilities()
+  sleep(1000).then(() => { 
+    console.log(value)
+    probAcive = average(value[0])
+    probRest = average(value[1])
+    console.log(probAcive)
+    console.log(probRest)
+    document.querySelector('#active').textContent = probAcive
+    document.querySelector('#rest').textContent = probAcive
+    storedResults = [[],[],[],[]]
+  })
 }

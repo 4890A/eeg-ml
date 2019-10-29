@@ -179,6 +179,7 @@ window.train = function () {
 
   function doneTraining() {
     console.log('done!');
+    neuralNetwork.save();
   }
   neuralNetwork.train(trainingOptions, whileTraining, doneTraining)
 
@@ -210,7 +211,7 @@ async function confidenceFromArray(classification) {
     ))
     .map(activeObject => (activeObject.confidence))
 
-    return classificationArray
+  return classificationArray
 }
 
 async function classifyFlatten() {
@@ -232,11 +233,11 @@ async function getProbabilities() {
 
   await classifyFlatten();
   sleep(1000).then(async () => {
-  console.log(unfilteredResults);
-  classificationArrayActive =  await confidenceFromArray('active');
-  classificationArrayRest = await confidenceFromArray('rest');
-  console.log(classificationArrayActive)
-  console.log(classificationArrayRest)
+    console.log(unfilteredResults);
+    classificationArrayActive = await confidenceFromArray('active');
+    classificationArrayRest = await confidenceFromArray('rest');
+    console.log(classificationArrayActive)
+    console.log(classificationArrayRest)
   })
 }
 
@@ -260,6 +261,8 @@ window.predict = async function () {
     ];
   })
 }
+
+
 },{"muse-js":5}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });

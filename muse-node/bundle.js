@@ -1,6 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const Muse = require('muse-js') // this node.js style import needs to be browserified
 // $ browserify index.js -o bundle.js
+// This will bundle all of the necessary dependencies
 
 
 const graphTitles = Array.from(document.querySelectorAll('.electrode-item h3'));
@@ -12,8 +13,6 @@ const blinkStatus = document.querySelector('#blinkStatus');
 
 const networkParams = {
   task: 'classification',
-  //activationHidden: 'sigmoid',
-  // activationOutput: 'sigmoid',
   debug: true,
   learningRate: .25,
   layers: [
@@ -31,9 +30,8 @@ const networkParams = {
       activation: 'sigmoid',
     })
   ],
-  inputs: 4, // or the names of the data properties ['temperature', 'precipitation']
-  outputs: 2, // or the names of the data properties ['thermalComfort']
-  // modelMetrics: ['accuracy'],
+  inputs: 4,
+  outputs: 2,
   modelLoss: 'categoricalCrossentropy',
   modelOptimizer: 'adam',
 }
@@ -196,58 +194,60 @@ function average(arr) {
   return sum
 }
 
-// neuralNetowrk.classify returns an array of objects cooresponding to classifications
-// along with their probabities. The array is sorted by lieklyhood, therefore a filter has to be
-// applied using the classificatin label before calculating average probabilites over a series of 
-// predictions
-function confidenceFromArray(classification, unfilteredResults) {
-  var classificationArray = unfilteredResults
-    .filter(classificationObject => (
-      classificationObject.label == classification
-    ))
-    .map(activeObject => (activeObject.confidence))
-
-  return classificationArray
-}
-
 // a function to sleep
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
+// neuralNetowrk.classify returns an array of objects cooresponding to classifications
+// along with their probabities. The array is sorted by lieklyhood, therefore a filter has to be
+// applied using the classificatin label before calculating average probabilites over a series of 
+// predictions
+async function confidenceFromArray(classification) {
+  const classificationArray = unfilteredResults
+    .filter(classificationObject => (
+      classificationObject.label == classification
+    ))
+    .map(activeObject => (activeObject.confidence))
 
-function getProbabilities() {
+    return classificationArray
+}
 
-  recording = false
-  var unfilteredResults = [];
-  var classificationArrayActive;
-  var classificationArrayRest;
-
+async function classifyFlatten() {
   storedResults[3].forEach((value, index) => {
     const x = storedResults.map(electrode => (electrode[index]))
     neuralNetwork.classify(x, (err, results) => {
-      console.log(results)
       unfilteredResults.push(...results)
     })
   })
-  sleep(1000).then(() => {
-    console.log(unfilteredResults)
-    classificationArrayActive = confidenceFromArray('active', unfilteredResults);
-    classificationArrayRest = confidenceFromArray('rest', unfilteredResults)
-  });
+}
 
-  return [classificationArrayActive, classificationArrayRest]
+var unfilteredResults = [];
+var classificationArrayActive;
+var classificationArrayRest;
+
+async function getProbabilities() {
+
+  recording = false
+
+  await classifyFlatten();
+  sleep(1000).then(async () => {
+  console.log(unfilteredResults);
+  classificationArrayActive =  await confidenceFromArray('active');
+  classificationArrayRest = await confidenceFromArray('rest');
+  console.log(classificationArrayActive)
+  console.log(classificationArrayRest)
+  })
 }
 
 
-window.predict = function () {
-  value = getProbabilities()
+window.predict = async function () {
+  await getProbabilities();
   // the neuralnNetowrk.classify is asyncronous, need to sleep or await
   // for the classificationArrays to populate
-  sleep(3000).then(() => {
-    console.log(value);
-    probAcive = average(value[0]);
-    probRest = average(value[1]);
+  sleep(2000).then(() => {
+    probAcive = average(classificationArrayActive);
+    probRest = average(classificationArrayRest);
     console.log(probAcive);
     console.log(probRest);
     document.querySelector('#active').textContent = probAcive;

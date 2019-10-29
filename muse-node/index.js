@@ -202,48 +202,51 @@ const sleep = (milliseconds) => {
 // along with their probabities. The array is sorted by lieklyhood, therefore a filter has to be
 // applied using the classificatin label before calculating average probabilites over a series of 
 // predictions
-async function confidenceFromArray(classification, unfilteredResults, classificationArray) {
-  classificationArray = unfilteredResults
+async function confidenceFromArray(classification) {
+  const classificationArray = unfilteredResults
     .filter(classificationObject => (
       classificationObject.label == classification
     ))
     .map(activeObject => (activeObject.confidence))
+
+    return classificationArray
 }
 
 async function classifyFlatten() {
   storedResults[3].forEach((value, index) => {
     const x = storedResults.map(electrode => (electrode[index]))
     neuralNetwork.classify(x, (err, results) => {
-      console.log(results)
       unfilteredResults.push(...results)
     })
   })
 }
 
-function getProbabilities() {
+var unfilteredResults = [];
+var classificationArrayActive;
+var classificationArrayRest;
+
+async function getProbabilities() {
 
   recording = false
-  var unfilteredResults = [];
-  var classificationArrayActive;
-  var classificationArrayRest;
 
   await classifyFlatten();
-
-  await confidenceFromArray('active', unfilteredResults, classificationArrayActive);
-  await confidenceFromArray('rest', unfilteredResults, classificationArrayRest);
-
-  return [classificationArrayActive, classificationArrayRest]
+  sleep(1000).then(async () => {
+  console.log(unfilteredResults);
+  classificationArrayActive =  await confidenceFromArray('active');
+  classificationArrayRest = await confidenceFromArray('rest');
+  console.log(classificationArrayActive)
+  console.log(classificationArrayRest)
+  })
 }
 
 
-window.predict = function () {
-  value = getProbabilities()
+window.predict = async function () {
+  await getProbabilities();
   // the neuralnNetowrk.classify is asyncronous, need to sleep or await
   // for the classificationArrays to populate
-  sleep(3000).then(() => {
-    console.log(value);
-    probAcive = average(value[0]);
-    probRest = average(value[1]);
+  sleep(2000).then(() => {
+    probAcive = average(classificationArrayActive);
+    probRest = average(classificationArrayRest);
     console.log(probAcive);
     console.log(probRest);
     document.querySelector('#active').textContent = probAcive;

@@ -15,10 +15,24 @@ const networkParams = {
   //activationHidden: 'sigmoid',
   // activationOutput: 'sigmoid',
   debug: true,
-  learningRate: 4.,
+  learningRate: .25,
+  layers: [
+    ml5.tf.layers.dense({
+        units: 16,
+        inputShape: [4],
+        activation: 'relu',
+    }),
+    ml5.tf.layers.dense({
+        units: 16,
+        activation: 'relu',
+    }),
+    ml5.tf.layers.dense({
+        units: 2,
+        activation: 'sigmoid',
+    })
+],
   inputs: 4, // or the names of the data properties ['temperature', 'precipitation']
   outputs: 2, // or the names of the data properties ['thermalComfort']
-  hiddenUnits: 7,
   // modelMetrics: ['accuracy'],
   modelLoss: 'categoricalCrossentropy',
   modelOptimizer: 'adam',
@@ -155,7 +169,7 @@ window.train = function (){
   
   const trainingOptions={
     batchSize: 128,
-    epochs: 4000
+    epochs: 800
   }
   function whileTraining(epoch, loss){
     console.log(`epoch: ${epoch}, loss:${loss}`);

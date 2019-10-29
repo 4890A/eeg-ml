@@ -18,19 +18,19 @@ const networkParams = {
   learningRate: .25,
   layers: [
     ml5.tf.layers.dense({
-        units: 16,
-        inputShape: [4],
-        activation: 'relu',
+      units: 16,
+      inputShape: [4],
+      activation: 'relu',
     }),
     ml5.tf.layers.dense({
-        units: 16,
-        activation: 'relu',
+      units: 16,
+      activation: 'relu',
     }),
     ml5.tf.layers.dense({
-        units: 2,
-        activation: 'sigmoid',
+      units: 2,
+      activation: 'sigmoid',
     })
-],
+  ],
   inputs: 4, // or the names of the data properties ['temperature', 'precipitation']
   outputs: 2, // or the names of the data properties ['thermalComfort']
   // modelMetrics: ['accuracy'],
@@ -43,15 +43,20 @@ console.log(neuralNetwork)
 var recording = false
 var finishedTraining = false
 
-window.record = function (){
+window.record = function () {
   recording = true
 }
 
-window.stop = function (){
+window.stop = function () {
   recording = false
 }
 
-storedResults = [[],[],[],[]]
+storedResults = [
+  [],
+  [],
+  [],
+  []
+]
 
 // for each 15 element array returned by the eegReading, adjust the appropriate canvas with a 
 // histogram like plot
@@ -59,7 +64,7 @@ function plot(reading) {
   // identify the appropriate plot for the current electrode reading
   const canvas = canvases[reading.electrode];
   const context = canvasCtx[reading.electrode];
-  
+
   // escape the function if the electrode is invalid
   if (!context) {
     return;
@@ -68,7 +73,7 @@ function plot(reading) {
   const height = canvas.height / 2.0;
   context.fillStyle = 'black';
   context.clearRect(0, 0, canvas.width, canvas.height);
-  
+
   // loop through each eeg reading (15 per array) and create a rectangle cooresponding
   // to the appropriate voltage
   for (let i = 0; i < reading.samples.length; i++) {
@@ -81,48 +86,41 @@ function plot(reading) {
   }
 }
 
-let CalculateRMS = function (arr) { 
-  
-    // Map will return another array with each  
-    // element corresponding to the elements of 
-    // the original array mapped according to 
-    // some relation 
-    let Squares = arr.map((val) => (val*val)); 
-  
-    // Function reduce the array to a value 
-    // Here, all the elements gets added to the first 
-    // element which acted as the accumulator initially. 
-    let Sum = Squares.reduce((acum, val) => (acum + val)); 
-  
-    Mean = Sum/arr.length; 
-    return Math.sqrt(Mean); 
-} 
+let CalculateRMS = function (arr) {
+
+  // calculate the root mean squared of an array
+
+  let Squares = arr.map((val) => (val * val));
+  let Sum = Squares.reduce((acum, val) => (acum + val));
+
+  Mean = Sum / arr.length;
+  return Math.sqrt(Mean);
+}
 
 async function main() {
-  
+
   // initiate the web-bluetooth conection request
-  
+
   let client = new Muse.MuseClient();
   await client.connect();
   await client.start();
-  
+
   client.eegReadings.subscribe(reading => {
     plot(reading);
     graphTitles[reading.electrode].textContent = CalculateRMS(reading.samples).toString()
-    if(reading.electrode === 0){
-      if(Math.max.apply(null, reading.samples) >= 95){
+    if (reading.electrode === 0) {
+      if (Math.max.apply(null, reading.samples) >= 95) {
         blinkStatus.textContent = "(>*.*)> Blink"
-      }
-      else {
+      } else {
         blinkStatus.textContent = "(>o.o)> Eyes Open"
       }
     }
-    if(recording === true){
+    if (recording === true) {
       // storedResults[reading.electrode].push(Math.abs(Math.max.apply(null, reading.samples)));
       storedResults[reading.electrode].push(CalculateRMS(reading.samples))
     }
   });
-  
+
   client.accelerometerData.subscribe(acceleration => {
     // console.log(acceleration)
   });
@@ -131,98 +129,137 @@ async function main() {
 
 // web-bluetooth can only be started by a user gesture.
 // This funciton is called by an html button
-window.connect = function (){
+window.connect = function () {
   main();
 }
 
 // log stored Results. For testing purposes
-window.showRecorded = function (){
+window.showRecorded = function () {
   console.log(storedResults)
 }
 
 function createFeatures(resultsArray, classification) {
   recording = false
-  for(let i = 0; i < resultsArray[3].length; i+=1){
+  for (let i = 0; i < resultsArray[3].length; i += 1) {
     const x = resultsArray.map(electrode => (electrode[i]))
     var y = [classification]
     console.log(x)
     console.log(y)
     neuralNetwork.data.addData(x, y)
   }
-  storedResults  = [[],[],[],[]]
+  storedResults = [
+    [],
+    [],
+    [],
+    []
+  ]
 }
 
-window.classify1 = function (){
+window.classify1 = function () {
   createFeatures(storedResults, "rest")
   recording = false
 }
 
-window.classify0 = function(){
+window.classify0 = function () {
   createFeatures(storedResults, "active")
   recording = false
 }
 
-window.train = function (){
+window.train = function () {
   // normalize your data
   neuralNetwork.data.normalize();
   // train your model
-  
-  const trainingOptions={
+
+  const trainingOptions = {
     batchSize: 128,
-    epochs: 800
+    epochs: 150
   }
-  function whileTraining(epoch, loss){
+
+  function whileTraining(epoch, loss) {
     console.log(`epoch: ${epoch}, loss:${loss}`);
   }
-  function doneTraining(){
+
+  function doneTraining() {
     console.log('done!');
   }
   neuralNetwork.train(trainingOptions, whileTraining, doneTraining)
-  
+
   finishedTraining = true
 }
 
 function average(arr) {
   var sum = 0.
-  arr.forEach((value, index) => {sum += value})
+  arr.forEach((value, index) => {
+    sum += value
+  })
   sum = sum / arr.length
   return sum
 }
 
-function getProbabilities(){
-  
-  recording = false
-  var classificationArrayActive = []
-  var classificationArrayRest = []
-  
-  storedResults[3].forEach((value, index) => {
-    const x = storedResults.map(electrode => (electrode[index]))
-    neuralNetwork.classify(x, (err, results) => {
-      classificationArrayActive.push(results[0].confidence)
-      classificationArrayRest.push(results[1].confidence)
-    })
-  })
-  return [classificationArrayActive, classificationArrayRest]
+// neuralNetowrk.classify returns an array of objects cooresponding to classifications
+// along with their probabities. The array is sorted by lieklyhood, therefore a filter has to be
+// applied using the classificatin label before calculating average probabilites over a series of 
+// predictions
+function confidenceFromArray(classification, unfilteredResults) {
+  var classificationArray = unfilteredResults
+    .filter(classificationObject => (
+      classificationObject.label == classification
+    ))
+    .map(activeObject => (activeObject.confidence))
+
+  return classificationArray
 }
 
+// a function to sleep
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-window.predict = function(){
-  value = getProbabilities()
-  sleep(1000).then(() => { 
-    console.log(value)
-    probAcive = average(value[0])
-    probRest = average(value[1])
-    console.log(probAcive)
-    console.log(probRest)
-    document.querySelector('#active').textContent = probAcive
-    document.querySelector('#rest').textContent = probAcive
-    storedResults = [[],[],[],[]]
+
+function getProbabilities() {
+
+  recording = false
+  var unfilteredResults = [];
+  var classificationArrayActive;
+  var classificationArrayRest;
+
+  storedResults[3].forEach((value, index) => {
+    const x = storedResults.map(electrode => (electrode[index]))
+    neuralNetwork.classify(x, (err, results) => {
+      console.log(results)
+      unfilteredResults.push(...results)
+    })
   })
+  sleep(1000).then(() => {
+    console.log(unfilteredResults)
+    classificationArrayActive = confidenceFromArray('active', unfilteredResults);
+    classificationArrayRest = confidenceFromArray('rest', unfilteredResults)
+  });
+
+  return [classificationArrayActive, classificationArrayRest]
 }
 
+
+window.predict = function () {
+  value = getProbabilities()
+  // the neuralnNetowrk.classify is asyncronous, need to sleep or await
+  // for the classificationArrays to populate
+  sleep(3000).then(() => {
+    console.log(value);
+    probAcive = average(value[0]);
+    probRest = average(value[1]);
+    console.log(probAcive);
+    console.log(probRest);
+    document.querySelector('#active').textContent = probAcive;
+    document.querySelector('#rest').textContent = probRest;
+    storedResults = [
+      [],
+      [],
+      [],
+      []
+    ];
+  })
+}
 },{"muse-js":5}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });

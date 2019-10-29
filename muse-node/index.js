@@ -1,5 +1,6 @@
 const Muse = require('muse-js') // this node.js style import needs to be browserified
 // $ browserify index.js -o bundle.js
+// This will bundle all of the necessary dependencies
 
 
 const graphTitles = Array.from(document.querySelectorAll('.electrode-item h3'));
@@ -11,8 +12,6 @@ const blinkStatus = document.querySelector('#blinkStatus');
 
 const networkParams = {
   task: 'classification',
-  //activationHidden: 'sigmoid',
-  // activationOutput: 'sigmoid',
   debug: true,
   learningRate: .25,
   layers: [
@@ -30,9 +29,8 @@ const networkParams = {
       activation: 'sigmoid',
     })
   ],
-  inputs: 4, // or the names of the data properties ['temperature', 'precipitation']
-  outputs: 2, // or the names of the data properties ['thermalComfort']
-  // modelMetrics: ['accuracy'],
+  inputs: 4,
+  outputs: 2,
   modelLoss: 'categoricalCrossentropy',
   modelOptimizer: 'adam',
 }
@@ -195,25 +193,32 @@ function average(arr) {
   return sum
 }
 
-// neuralNetowrk.classify returns an array of objects cooresponding to classifications
-// along with their probabities. The array is sorted by lieklyhood, therefore a filter has to be
-// applied using the classificatin label before calculating average probabilites over a series of 
-// predictions
-function confidenceFromArray(classification, unfilteredResults) {
-  var classificationArray = unfilteredResults
-    .filter(classificationObject => (
-      classificationObject.label == classification
-    ))
-    .map(activeObject => (activeObject.confidence))
-
-  return classificationArray
-}
-
 // a function to sleep
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
+// neuralNetowrk.classify returns an array of objects cooresponding to classifications
+// along with their probabities. The array is sorted by lieklyhood, therefore a filter has to be
+// applied using the classificatin label before calculating average probabilites over a series of 
+// predictions
+async function confidenceFromArray(classification, unfilteredResults, classificationArray) {
+  classificationArray = unfilteredResults
+    .filter(classificationObject => (
+      classificationObject.label == classification
+    ))
+    .map(activeObject => (activeObject.confidence))
+}
+
+async function classifyFlatten() {
+  storedResults[3].forEach((value, index) => {
+    const x = storedResults.map(electrode => (electrode[index]))
+    neuralNetwork.classify(x, (err, results) => {
+      console.log(results)
+      unfilteredResults.push(...results)
+    })
+  })
+}
 
 function getProbabilities() {
 
@@ -222,18 +227,10 @@ function getProbabilities() {
   var classificationArrayActive;
   var classificationArrayRest;
 
-  storedResults[3].forEach((value, index) => {
-    const x = storedResults.map(electrode => (electrode[index]))
-    neuralNetwork.classify(x, (err, results) => {
-      console.log(results)
-      unfilteredResults.push(...results)
-    })
-  })
-  sleep(1000).then(() => {
-    console.log(unfilteredResults)
-    classificationArrayActive = confidenceFromArray('active', unfilteredResults);
-    classificationArrayRest = confidenceFromArray('rest', unfilteredResults)
-  });
+  await classifyFlatten();
+
+  await confidenceFromArray('active', unfilteredResults, classificationArrayActive);
+  await confidenceFromArray('rest', unfilteredResults, classificationArrayRest);
 
   return [classificationArrayActive, classificationArrayRest]
 }

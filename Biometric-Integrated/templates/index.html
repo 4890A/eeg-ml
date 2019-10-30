@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Biometric Machine Learning</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heatmapjs@2.0.2/heatmap.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../static/css/grayscale.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar flex-lg-column align-items-start navbar-expand-lg navbar-light fixed-top" id="mainNav" style="right: 400px;">
+    <div class="container" style="padding-top: 250px;">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto" style="flex-direction:column">
+            <li class="nav-item">
+                <strong>
+                  <a class="nav-link js-scroll-trigger" href="#page-top">Home</a>
+                </strong>
+              </li>
+          <li class="nav-item">
+            <strong>
+              <a class="nav-link js-scroll-trigger" href="#about">Intro</a>
+            </strong>
+          </li>
+          <li class="nav-item">
+            <strong>
+              <a class="nav-link js-scroll-trigger" href="#studies">Studies</a>
+            </strong>
+          </li>
+          <li class="nav-item">
+            <strong>
+              <a class="nav-link js-scroll-trigger" href="#muse">Muse</a>
+            </strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
+      <div class="mx-auto text-center">
+        <h1 class="mx-auto my-0 text-uppercase">Biometric Machine Learning</h1>
+        <h2 class="text-white mx-auto mt-2 mb-5">A project focused on training neural networks on various biometric data
+        </h2>
+        <a href="#about" class="btn btn-primary js-scroll-trigger">Intro</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 mx-auto">
+          <h2 class="text-white text-center mb-4">Applications of Machine Learning with Biometrics</h2>
+          <p class="text-white">
+            Electroencephalography (EEG) is a method which measures the electrical activity of the brain using
+            electrodes. Clinically, EEGs are most often used in the diagnosis of epilepsy, sleep disorders, coma,
+            encephalopathies, and depth of anesthesia. With the rapid advancement of machine learning in the last few
+            decades, researchers have been able to train algorithms to interpret and classify complex EEG signals. The
+            ability to interpret these signals has opened up many possibilities for the application of EEG such as the
+            development of mind-controlled prosthetics for amputees, robotic exoskeletons for motor impaired individuals
+            to even the recreation of dreams.
+            <br />
+            <br />
+            As a demonstration of some of the ways that we can apply machine learning to biometrics, we trained various
+            neural
+            networks on open source data and compare their capacity to interpret and classify the data. We also
+            attempted to gather raw data via a commercially available EEG,
+            <a href="https://choosemuse.com/muse/">the Muse headband</a> and train a neural network on simple
+            activities.
+          </p>
+          <div class="text-center">
+            <img src="../static/img/MI.png" alt="">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="studies" class="projects-section bg-light">
+    <div class="container">
+
+      <!-- Alcoholism Project Row -->
+      <div class="row justify-content center">
+        <div class="col-lg-12 text-center">
+          <h3><strong>
+              <font color="#4f837f">Neurological Impact of Alcoholism</font>
+            </strong></h3>
+          <br />
+        </div>
+
+      </div>
+      <div class="row justify-content-center no-gutters">
+        <div class="col-lg-5">
+          <div class="heatmap_avg">
+            <img src="../static/img/braincase.png" alt="">
+          </div>
+          <div class="row justify-content-center" style="margin-top: 15px; margin-left: -100px;">
+            <button id="btn_braina" type="button" class="btn btn-primary">New Subject</button>
+          </div>
+        </div>
+
+        <div class='col-lg-7'>
+          <div class="container-fluid">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                  aria-controls="nav-home" aria-selected="true"><strong>About</strong></a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                  aria-controls="nav-profile" aria-selected="false"><strong>Models</strong></a>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <font color="black">
+                  <br />
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil at necessitatibus fugit, numquam
+                  quam beatae! Exercitationem aliquid illo ipsum fugit, magni tenetur dignissimos reprehenderit! Sed
+                  recusandae commodi mollitia incidunt quod.
+                </font>
+
+              </div>
+              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <br />
+                <h6><strong>
+                    <font color="#4f837f">Actual Classification</font>
+                  </strong></h6>
+                <div id="ACT"></div>
+                <hr>
+                <h6><strong>
+                    <font color="#4f837f">Neural Network</font>
+                  </strong></h6>
+                <div id="NN"></div>
+                <hr>
+                <h6><strong>
+                    <font color="#4f837f">1D Convolutional Neural Network</font>
+                  </strong></h6>
+                <div id="CNN"></div>
+                <hr>
+                <h6><strong>
+                    <font color="#4f837f">Logistic Regression</font>
+                  </strong></h6>
+                <div id="LR"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="d-none d-lg-block mt-5 mb-5 mr-0" style="border-color: #64a19d; border-width: .25rem;">
+
+      <!-- Accelerometer/Gyroscope Row -->
+      <div class='col-lg-12'>
+        <div class="container-fluid">
+          <div class="row" style="justify-content: center;">
+            <h3><strong>
+                <font color="#4f837f">Classifying Motion </font>
+              </strong></h3>
+            <br />
+          </div>
+
+          <nav>
+            <br />
+            <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
+                aria-controls="nav-home" aria-selected="true"><strong>About</strong></a>
+              <a class="nav-item nav-link" id="nav-phone-tab" data-toggle="tab" href="#nav-phone" role="tab"
+                aria-controls="nav-profile" aria-selected="false"><strong>Phone</strong></a>
+              <a class="nav-item nav-link" id="nav-watch-tab" data-toggle="tab" href="#nav-watch" role="tab"
+                aria-controls="nav-profile" aria-selected="false"><strong>Watch</strong></a>
+            </div>
+          </nav>
+
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-5">
+                    <br />
+                    <img src="../static/img/motion.png" class="img-fluid" alt="">
+                  </div>
+                  <div class="col-lg-7">
+                    <font color="black">
+                      <br />
+                      Smart phones and watches use gyroscopes and accelerometers to detect motion. We analyzed <a
+                        href="https://archive.ics.uci.edu/ml/datasets/Heterogeneity+Activity+Recognition">the HHAR dataset</a>, collected from phones and watches worn by people engaged in activities such as walking,
+                      biking, and ascending stairs to see how well the data from those devices predicts the activities.
+                      A basic neural network was used first, which predicted activity with an approximate accuracy of 65%, and final
+                      obtained a better predictive accuracy of 87% using a Long Short Term Memory (LSTM) network, which
+                      is a type of Recurrent Neural Network (RNN) which considers not just the current
+                      input, but what it remembers about the preceding elements.
+                    </font>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-phone" role="tabpanel" aria-labelledby="nav-phone-tab">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <div class="col-lg-5">
+                    <div id="IMGP">
+                      <br />
+                      <svg width="400px" height="400px">
+                    </div>
+                    <div class="row justify-content-center" style="margin-top: 15px; margin-left: -100px;">
+                      <button id="btn_phone" type="button" class="btn btn-primary">New Subject</button>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-7">
+                    <br />
+                    <h6><strong>
+                        <font color="#4f837f">Actual Classification</font>
+                      </strong></h6>
+                    <div id="ACTP"></div>
+                    <hr>
+                    <h6><strong>
+                        <font color="#4f837f">Neural Network</font>
+                      </strong></h6>
+                    <div id="NNP"></div>
+                    <hr>
+                    <h6><strong>
+                        <font color="#4f837f">LSTM - Recurrent Neural Network</font>
+                      </strong></h6>
+                    <div id="LSTMP"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-watch" role="tabpanel" aria-labelledby="nav-watch-tab">
+              <div class="container-fluid">
+                <div class="row">
+
+                  <div class="col-lg-5">
+                    <div id="IMGW">
+                      <br />
+                      <svg width="400px" height="400px">
+                    </div>
+                    <div class="row justify-content-center" style="margin-top: 15px; margin-left: -100px;">
+                      <button id="btn_watch" type="button" class="btn btn-primary">New Subject</button>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-7">
+                    <br />
+                    <h6><strong>
+                        <font color="#4f837f">Actual Classification</font>
+                      </strong></h6>
+                    <div id="ACTW"></div>
+                    <hr>
+                    <h6><strong>
+                        <font color="#4f837f">Neural Network</font>
+                      </strong></h6>
+                    <div id="NNW"></div>
+                    <hr>
+                    <h6><strong>
+                        <font color="#4f837f">LSTM - Recurrent Neural Network</font>
+                      </strong></h6>
+                    <div id="LSTMW"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="muse" class="projects-section" style="background-color: #161616;">
+    <div class='col-lg-12'>
+      <div class="container-fluid">
+        <div class="row" style="justify-content: center;">
+          <h1><strong>
+              <font color="#fff" style="letter-spacing: 0.3rem;">MUSE</font>
+            </strong></h1>
+          <br />
+        </div>
+        <div class="row">
+          <div class="col-lg-6 mx-auto justify-content: center;">
+            <p class="text-white">
+              <br />
+              Using a Muse headband, we were able to extract raw electrode data and train a neural
+              network on relatively simple activities. You can try out our demo and train a neural network if you have a
+              Muse headband!
+              <br />
+              <br />
+            </p>
+          </div>
+        </div>
+        <div class="row" style="justify-content: center;">
+          <a href="https://4890a.github.io/muse-ml5js/" class="btn btn-primary btn-lg js-scroll-trigger">DEMO</a>
+          <br />
+          <br />
+        </div>
+        <div class="row" style="margin-left: 500px;">
+          <img src="../static/img/muse.png" class="img-fluid" alt="" style="padding-top: 20px;">
+        </div>
+      </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="bg-black small text-center text-white-50">
+    <div class="container">
+      Copyright &copy; UNC Bootcamp 2019
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="../static/js/grayscale.min.js"></script>
+
+  <script src="../static/js/script.js"></script>
+
+</body>
+
+</html>

@@ -3,7 +3,7 @@ const Muse = require('muse-js') // this node.js style import needs to be browser
 // This will bundle all of the necessary dependencies
 
 
-const graphTitles = Array.from(document.querySelectorAll('.electrode-item h3'));
+const graphTitles = Array.from(document.querySelectorAll('.electrode-item h4'));
 
 // hook onto and store the cavas div/ canvas context
 const canvases = Array.from(document.querySelectorAll('.electrode-item canvas'));
@@ -48,7 +48,7 @@ window.stop = function () {
   recording = false
 }
 
-storedResults = [
+var storedResults = [
   [],
   [],
   [],
@@ -68,7 +68,11 @@ function plot(reading) {
   }
   const width = canvas.width / 12.0;
   const height = canvas.height / 2.0;
-  context.fillStyle = 'black';
+  var color = "#4f837f"
+  if(recording){
+    color = "#CDADFF"
+  } 
+  context.fillStyle = color;
   context.clearRect(0, 0, canvas.width, canvas.height);
 
   // loop through each eeg reading (15 per array) and create a rectangle cooresponding
@@ -231,7 +235,7 @@ async function getProbabilities() {
   recording = false
 
   await classifyFlatten();
-  sleep(1000).then(async () => {
+  sleep(2000).then(async () => {
     console.log(unfilteredResults);
     classificationArrayActive = await confidenceFromArray('active');
     classificationArrayRest = await confidenceFromArray('rest');
@@ -245,7 +249,7 @@ window.predict = async function () {
   await getProbabilities();
   // the neuralnNetowrk.classify is asyncronous, need to sleep or await
   // for the classificationArrays to populate
-  sleep(2000).then(() => {
+  sleep(4000).then(() => {
     probAcive = average(classificationArrayActive);
     probRest = average(classificationArrayRest);
     console.log(probAcive);
@@ -258,6 +262,7 @@ window.predict = async function () {
       [],
       []
     ];
+    unfilteredResults = [];
   })
 }
 

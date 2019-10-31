@@ -28,15 +28,16 @@
 <body id="page-top">
 
   <!-- Navigation -->
-  <nav class="navbar flex-lg-column align-items-start navbar-expand-lg navbar-light fixed-top" id="mainNav" style="right: 400px;">
+  <nav class="navbar flex-lg-column align-items-start navbar-expand-lg navbar-light fixed-top" id="mainNav"
+    style="right: 400px;">
     <div class="container" style="padding-top: 250px;">
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav mr-auto" style="flex-direction:column">
-            <li class="nav-item">
-                <strong>
-                  <a class="nav-link js-scroll-trigger" href="#page-top">Home</a>
-                </strong>
-              </li>
+          <li class="nav-item">
+            <strong>
+              <a class="nav-link js-scroll-trigger" href="#page-top">Home</a>
+            </strong>
+          </li>
           <li class="nav-item">
             <strong>
               <a class="nav-link js-scroll-trigger" href="#about">Intro</a>
@@ -76,21 +77,49 @@
         <div class="col-lg-10 mx-auto">
           <h2 class="text-white text-center mb-4">Applications of Machine Learning with Biometrics</h2>
           <p class="text-white">
-            Electroencephalography (EEG) is a method which measures the electrical activity of the brain using
-            electrodes. Clinically, EEGs are most often used in the diagnosis of epilepsy, sleep disorders, coma,
+            Biometrics is a blanket term referring to the statistical analysis of biological data. It
+            is often associated with, but not limited to, the analysis of unique physical or behavioral traits such as
+            DNA,
+            fingerprint or voice patterns. Our research focuses on electroencephalograms (EEG) readings and human
+            activity measured with accelerometer and gyroscope data.
+            <br />
+            <br />
+            EEGs measure the electrical activity of the brain using
+            electrodes placed on the head. Clinically, EEGs are most often used in the diagnosis of epilepsy, sleep
+            disorders, coma,
             encephalopathies, and depth of anesthesia. With the rapid advancement of machine learning in the last few
-            decades, researchers have been able to train algorithms to interpret and classify complex EEG signals. The
-            ability to interpret these signals has opened up many possibilities for the application of EEG such as the
-            development of mind-controlled prosthetics for amputees, robotic exoskeletons for motor impaired individuals
+            decades, researchers have been able to train algorithms to interpret and classify complex EEG signals,
+            opening up
+            many possibilities for the development of mind-controlled prosthetics for amputees, robotic exoskeletons for
+            motor impaired individuals
             to even the recreation of dreams.
             <br />
             <br />
-            As a demonstration of some of the ways that we can apply machine learning to biometrics, we trained various
-            neural
-            networks on open source data and compare their capacity to interpret and classify the data. We also
+            Accelerometer and gyroscopes are devices that are used to determine the position and orientation of an
+            object. In recent years, smartphones and smartwatches have incorporated these devices to allow users to
+            track
+            their daily physical activities and calories burned. By applying machine learning to the data collected by
+            these devices, we're
+            able to classify differnt motion types and apply them to our day to day lives. For example, Apple has
+            refined their watch's algorithm to detect hard falls, if the watch's
+            motion
+            sensors detect that the user is immobile over a short period of time after the event, it will automatically
+            contact
+            emergency
+            services on their behalf.
+            <br />
+            <br />
+            To demonstrate some of the ways that we can apply machine learning to biometrics, we trained various
+            neural networks on open source data and compared their capacity to classify and predict human conditions. We
+            also
             attempted to gather raw data via a commercially available EEG,
-            <a href="https://choosemuse.com/muse/">the Muse headband</a> and train a neural network on simple
+            <a href="https://choosemuse.com/muse/" style="z-index:10000;">the Muse headband</a> and train a neural network on simple
             activities.
+            <br />
+            <br />
+            For an explanation on how machine learning works, we highly recommend checking out <a
+              href="https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi" style="z-index:10000;">3Blue1Brown</a>'s
+            videos on neural networks!
           </p>
           <div class="text-center">
             <img src="../static/img/MI.png" alt="">
@@ -121,7 +150,7 @@
             <img src="../static/img/braincase.png" alt="">
           </div>
           <div class="row justify-content-center" style="margin-top: 15px; margin-left: -100px;">
-            <button id="btn_braina" type="button" class="btn btn-primary">New Subject</button>
+            <button id="btn_braina" type="button" class="btn btn-primary" style="z-index: 10000;">New Subject</button>
           </div>
         </div>
 
@@ -130,20 +159,29 @@
             <nav>
               <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                  aria-controls="nav-home" aria-selected="true"><strong>About</strong></a>
+                  aria-controls="nav-home" aria-selected="true" style="z-index: 10000;"><strong>About</strong></a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                  aria-controls="nav-profile" aria-selected="false"><strong>Models</strong></a>
+                  aria-controls="nav-profile" aria-selected="false" style="z-index: 10000;"><strong>Models</strong></a>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
               <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 <font color="black">
                   <br />
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil at necessitatibus fugit, numquam
-                  quam beatae! Exercitationem aliquid illo ipsum fugit, magni tenetur dignissimos reprehenderit! Sed
-                  recusandae commodi mollitia incidunt quod.
+                  This data arises from a large study to examine EEG correlation of <a
+                    href="https://archive.ics.uci.edu/ml/datasets/EEG+Database" style="z-index: 10000;">genetic predisposition to
+                    alcoholism</a>. It contains measurements from 64 electrodes placed on subject's scalps which were
+                  sampled
+                  at 256 Hz (3.9-msec epoch) for 1 second. There were two groups of subjects: alcoholic and control.
+                  Each subject was exposed to either a single stimulus (S1) or to two stimuli (S1 and S2) which were
+                  pictures of objects chosen from the 1980 Snodgrass and Vanderwart picture set. There were 122 subjects
+                  and each subject completed 120 trials where different stimuli were shown. The electrode positions were
+                  located at standard sites (Standard Electrode Position Nomenclature, American Electroencephalographic
+                  Association 1990).
+                  The objective of this project was to develop and test three different predictive models. The models
+                  were trained to predict/classify an observation as belonging to a subject identified as “alcoholic” or
+                  as a “control” using train data from the 2,830,592 observations of EEG included in the data set.
                 </font>
-
               </div>
               <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <br />
@@ -187,11 +225,11 @@
             <br />
             <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab"
-                aria-controls="nav-home" aria-selected="true"><strong>About</strong></a>
+                aria-controls="nav-home" aria-selected="true" style="z-index: 10000;"><strong>About</strong></a>
               <a class="nav-item nav-link" id="nav-phone-tab" data-toggle="tab" href="#nav-phone" role="tab"
-                aria-controls="nav-profile" aria-selected="false"><strong>Phone</strong></a>
+                aria-controls="nav-profile" aria-selected="false" style="z-index: 10000;"><strong>Phone</strong></a>
               <a class="nav-item nav-link" id="nav-watch-tab" data-toggle="tab" href="#nav-watch" role="tab"
-                aria-controls="nav-profile" aria-selected="false"><strong>Watch</strong></a>
+                aria-controls="nav-profile" aria-selected="false" style="z-index: 10000;"><strong>Watch</strong></a>
             </div>
           </nav>
 
@@ -207,9 +245,12 @@
                     <font color="black">
                       <br />
                       Smart phones and watches use gyroscopes and accelerometers to detect motion. We analyzed <a
-                        href="https://archive.ics.uci.edu/ml/datasets/Heterogeneity+Activity+Recognition">the HHAR dataset</a>, collected from phones and watches worn by people engaged in activities such as walking,
+                        href="https://archive.ics.uci.edu/ml/datasets/Heterogeneity+Activity+Recognition" style="z-index: 10000;">the HHAR
+                        dataset</a>, collected from phones and watches worn by people engaged in activities such as
+                      walking,
                       biking, and ascending stairs to see how well the data from those devices predicts the activities.
-                      A basic neural network was used first, which predicted activity with an approximate accuracy of 65%, and final
+                      A basic neural network was used first, which predicted activity with an approximate accuracy of
+                      65%, and final
                       obtained a better predictive accuracy of 87% using a Long Short Term Memory (LSTM) network, which
                       is a type of Recurrent Neural Network (RNN) which considers not just the current
                       input, but what it remembers about the preceding elements.
@@ -229,7 +270,7 @@
                       <svg width="400px" height="400px">
                     </div>
                     <div class="row justify-content-center" style="margin-top: 15px; margin-left: -100px;">
-                      <button id="btn_phone" type="button" class="btn btn-primary">New Subject</button>
+                      <button id="btn_phone" type="button" class="btn btn-primary" style="z-index: 10000;">New Subject</button>
                     </div>
                   </div>
 
@@ -264,7 +305,7 @@
                       <svg width="400px" height="400px">
                     </div>
                     <div class="row justify-content-center" style="margin-top: 15px; margin-left: -100px;">
-                      <button id="btn_watch" type="button" class="btn btn-primary">New Subject</button>
+                      <button id="btn_watch" type="button" class="btn btn-primary" style="z-index: 10000;">New Subject</button>
                     </div>
                   </div>
 
@@ -297,7 +338,7 @@
       </div>
     </div>
   </section>
-
+  
   <section id="muse" class="projects-section" style="background-color: #161616;">
     <div class='col-lg-12'>
       <div class="container-fluid">
@@ -320,7 +361,7 @@
           </div>
         </div>
         <div class="row" style="justify-content: center;">
-          <a href="https://4890a.github.io/muse-ml5js/" class="btn btn-primary btn-lg js-scroll-trigger">DEMO</a>
+          <a href="https://4890a.github.io/muse-ml5js/" class="btn btn-primary btn-lg js-scroll-trigger" style="z-index: 10000;">DEMO</a>
           <br />
           <br />
         </div>
@@ -333,9 +374,13 @@
 
   <!-- Footer -->
   <footer class="bg-black small text-center text-white-50">
-    <div class="container">
-      Copyright &copy; UNC Bootcamp 2019
-    </div>
+    <navbar>
+      <p class="text-center">
+        <a href="https://github.com/4890A/eeg-ml" style="z-index: 10000;">
+          <img class='github-logo img-fluid' src="../static/img/GitHub-Mark-32px-custom.png" alt="GitHub-Mark">
+        </a>
+      </p>
+    </navbar>
   </footer>
 
   <!-- Bootstrap core JavaScript -->

@@ -11,7 +11,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 
     <!-- Custom fonts for this template -->
     <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -127,15 +131,15 @@
     <div class="mx-auto text-center">
         <br />
         <button class="btn btn-primary" onclick="connect()">
-            Connect
+            <span class="glyphicon glyphicon-off"></span> Connect
         </button>
 
         <button class="btn btn-primary" onclick="record()">
-            Record
+            <span class="glyphicon glyphicon-record"></span> Record
         </button>
 
         <button class="btn btn-primary" onclick="stop()">
-            Stop
+            <span class="glyphicon glyphicon-stop"></span> Stop
         </button>
 
 
@@ -144,11 +148,11 @@
 
     <div class="mx-auto text-center">
         <button class="btn btn-primary" onclick="classify0()">
-            Classify (0)
+            Classify 0
         </button>
 
         <button class="btn btn-primary" onclick="classify1()">
-            Classify (1)
+            Classify 1
         </button>
 
         <button class="btn btn-primary" onclick="train()">
@@ -159,7 +163,6 @@
             Predict
         </button>
     </div>
-
 
     <script src="bundle.js"></script>
 

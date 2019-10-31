@@ -31,7 +31,7 @@
  {.masthead h1{font-size:2.5rem;line-height:4rem}}
  @media (min-width:992px)
  {.masthead{height:100vh;padding:0}
- .masthead h1{font-size:3rem;line-height:6.5rem;letter-spacing:.7rem}
+ .masthead h1{font-size:6rem;line-height:6.5rem;letter-spacing:.7rem}
  .masthead h2{max-width:30rem;font-size:1.25rem}}
 
 

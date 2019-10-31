@@ -1,0 +1,644 @@
+{
+  "paragraphs": [
+    {
+      "title": "",
+      "text": "%pyspark\nimport pandas as pd\nimport numpy as np\nimport os\n\nimport tensorflow as tf\nfrom sklearn.preprocessing import LabelEncoder, StandardScaler\nfrom keras.models import Sequential\nfrom keras.utils import to_categorical\nfrom keras.layers import Dense\n",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:53:29.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-232558_708672784",
+      "dateCreated": "2019-10-25 23:25:58.000",
+      "dateStarted": "2019-10-30 17:53:29.687",
+      "dateFinished": "2019-10-30 17:53:29.798",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nurl \u003d \"https://kent-bryant-dataviz.s3.us-east-2.amazonaws.com/Phones_gyroscope.csv\"\nphone_gyro \u003d pd.read_csv(url)",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:49:44.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-232742_1952941389",
+      "dateCreated": "2019-10-25 23:27:42.000",
+      "dateStarted": "2019-10-30 17:48:24.721",
+      "dateFinished": "2019-10-30 17:49:44.894",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nphone_gyro.head()",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:50:35.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "   Index   Arrival_Time        Creation_Time         x         y         z  \\\n0      0  1424696633909  1424696631914042029  0.013748 -0.000626 -0.023376   \n1      1  1424696633909  1424696631919046912  0.014816 -0.001694 -0.022308   \n2      2  1424696633918  1424696631924051794  0.015884 -0.001694 -0.021240   \n3      3  1424696633919  1424696631929117712  0.016953 -0.003830 -0.020172   \n4      4  1424696633928  1424696631934214148  0.015884 -0.007034 -0.020172   \n\n  User   Model    Device     gt  \n0    a  nexus4  nexus4_1  stand  \n1    a  nexus4  nexus4_1  stand  \n2    a  nexus4  nexus4_1  stand  \n3    a  nexus4  nexus4_1  stand  \n4    a  nexus4  nexus4_1  stand  ",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-233334_1849111805",
+      "dateCreated": "2019-10-25 23:33:34.000",
+      "dateStarted": "2019-10-30 17:50:35.349",
+      "dateFinished": "2019-10-30 17:50:35.462",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nphone_gyro_df \u003d phone_gyro.dropna(how\u003d\u0027any\u0027,axis\u003d0)\n",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:50:47.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-234122_1630801882",
+      "dateCreated": "2019-10-25 23:41:22.000",
+      "dateStarted": "2019-10-30 17:50:41.867",
+      "dateFinished": "2019-10-30 17:50:47.636",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nphone_gyro_df[\u0027gt\u0027].unique()",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:51:00.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "array([\u0027stand\u0027, \u0027sit\u0027, \u0027walk\u0027, \u0027stairsup\u0027, \u0027stairsdown\u0027, \u0027bike\u0027],\n      dtype\u003dobject)",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-234518_162051612",
+      "dateCreated": "2019-10-25 23:45:18.000",
+      "dateStarted": "2019-10-30 17:51:00.159",
+      "dateFinished": "2019-10-30 17:51:00.620",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\r\ny_pg \u003d phone_gyro_df[\u0027gt\u0027].values\r\nprint(y_pg.shape)",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:51:06.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "(12063005,)\n",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-234553_1841213322",
+      "dateCreated": "2019-10-25 23:45:53.000",
+      "dateStarted": "2019-10-30 17:51:06.437",
+      "dateFinished": "2019-10-30 17:51:06.546",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nX_pg \u003d phone_gyro_df.iloc[:,3:6].values\nX_pg",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:51:12.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "array([[ 0.01374817, -0.00062561, -0.02337646],\n       [ 0.01481628, -0.00169373, -0.02230835],\n       [ 0.0158844 , -0.00169373, -0.02124023],\n       ...,\n       [-0.17761682,  0.05611521,  0.09515187],\n       [-0.19518332, -0.12442937,  0.0631906 ],\n       [-0.16200216, -0.20884615,  0.04318431]])",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-234757_230001233",
+      "dateCreated": "2019-10-25 23:47:57.000",
+      "dateStarted": "2019-10-30 17:51:12.189",
+      "dateFinished": "2019-10-30 17:51:12.451",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nprint(X_pg.shape)\nprint(y_pg.shape)",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:51:21.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "(12063005, 3)\n(12063005,)\n",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-235013_243367806",
+      "dateCreated": "2019-10-25 23:50:13.000",
+      "dateStarted": "2019-10-30 17:51:20.953",
+      "dateFinished": "2019-10-30 17:51:21.062",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nfrom sklearn.model_selection import train_test_split\n\nXpg_train, Xpg_test, ypg_train, ypg_test \u003d train_test_split(X_pg, y_pg, random_state\u003d1, stratify\u003dy_pg)",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:51:43.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-235047_864396384",
+      "dateCreated": "2019-10-25 23:50:47.000",
+      "dateStarted": "2019-10-30 17:51:29.071",
+      "dateFinished": "2019-10-30 17:51:43.702",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nX_scaler \u003d StandardScaler().fit(Xpg_train)\nXpg_train_scaled \u003d X_scaler.transform(Xpg_train)\nXpg_test_scaled \u003d X_scaler.transform(Xpg_test)",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:54:12.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191030-174350_1719668149",
+      "dateCreated": "2019-10-30 17:43:50.000",
+      "dateStarted": "2019-10-30 17:54:11.014",
+      "dateFinished": "2019-10-30 17:54:12.725",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nlabel_encoder \u003d LabelEncoder()\nlabel_encoder.fit(ypg_train)\nencoded_ypg_train \u003d label_encoder.transform(ypg_train)\nencoded_ypg_test \u003d label_encoder.transform(ypg_test)",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:54:29.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-235132_334968878",
+      "dateCreated": "2019-10-25 23:51:32.000",
+      "dateStarted": "2019-10-30 17:54:27.170",
+      "dateFinished": "2019-10-30 17:54:29.033",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nypg_train_categorical \u003d to_categorical(encoded_ypg_train)\nypg_train_categorical[:10]",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:54:36.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "array([[0., 0., 0., 0., 1., 0.],\n       [0., 0., 0., 0., 1., 0.],\n       [0., 0., 0., 0., 1., 0.],\n       [0., 0., 1., 0., 0., 0.],\n       [0., 0., 1., 0., 0., 0.],\n       [0., 1., 0., 0., 0., 0.],\n       [0., 0., 0., 0., 1., 0.],\n       [0., 1., 0., 0., 0., 0.],\n       [0., 0., 1., 0., 0., 0.],\n       [0., 0., 0., 1., 0., 0.]], dtype\u003dfloat32)",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-235450_1271742527",
+      "dateCreated": "2019-10-25 23:54:50.000",
+      "dateStarted": "2019-10-30 17:54:36.232",
+      "dateFinished": "2019-10-30 17:54:36.643",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\nmodel \u003d Sequential()\nmodel.add(Dense(units\u003d100, activation\u003d\u0027relu\u0027, input_dim\u003d3))\nmodel.add(Dense(units\u003d100, activation\u003d\u0027relu\u0027))\nmodel.add(Dense(units\u003d6, activation\u003d\u0027softmax\u0027))",
+      "user": "",
+      "dateUpdated": "2019-10-30 17:54:41.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "results": [
+          {}
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "WARNING:tensorflow:From /usr/zepl/miniconda2/lib/python2.7/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\nInstructions for updating:\nColocations handled automatically by placer.\n",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-235526_402493744",
+      "dateCreated": "2019-10-25 23:55:26.000",
+      "dateStarted": "2019-10-30 17:54:41.747",
+      "dateFinished": "2019-10-30 17:54:41.907",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "%pyspark\n# Compile and fit the model\nmodel.compile(optimizer\u003d\u0027adam\u0027,\n              loss\u003d\u0027categorical_crossentropy\u0027,\n              metrics\u003d[\u0027accuracy\u0027])\nmodel.fit(\n    Xpg_train_scaled,\n    ypg_train_categorical,\n    batch_size\u003d1000,\n    epochs\u003d20,\n    shuffle\u003dTrue,\n    verbose\u003d2\n)",
+      "user": "",
+      "dateUpdated": "2019-10-30 18:03:02.000",
+      "config": {
+        "selectedInterpreter": {
+          "name": "spark.pyspark",
+          "profile": "pyspark",
+          "isCustom": false,
+          "editorLanguage": "python",
+          "className": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "isDefault": false
+        },
+        "colWidth": 12.0,
+        "tableHide": false,
+        "results": [
+          {
+            "graph": {
+              "height": 300.0
+            }
+          }
+        ],
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false
+        }
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "data": "WARNING:tensorflow:From /usr/zepl/miniconda2/lib/python2.7/site-packages/tensorflow/python/ops/math_ops.py:3066: to_int32 (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.\nInstructions for updating:\nUse tf.cast instead.\nEpoch 1/20\n - 25s - loss: 1.0612 - acc: 0.5161\nEpoch 2/20\n - 24s - loss: 1.0401 - acc: 0.5283\nEpoch 3/20\n - 24s - loss: 1.0366 - acc: 0.5303\nEpoch 4/20\n - 24s - loss: 1.0346 - acc: 0.5312\nEpoch 5/20\n - 24s - loss: 1.0335 - acc: 0.5318\nEpoch 6/20\n - 24s - loss: 1.0323 - acc: 0.5322\nEpoch 7/20\n - 24s - loss: 1.0315 - acc: 0.5326\nEpoch 8/20\n - 24s - loss: 1.0308 - acc: 0.5330\nEpoch 9/20\n - 24s - loss: 1.0303 - acc: 0.5333\nEpoch 10/20\n - 24s - loss: 1.0298 - acc: 0.5335\nEpoch 11/20\n - 24s - loss: 1.0293 - acc: 0.5337\nEpoch 12/20\n - 24s - loss: 1.0289 - acc: 0.5339\nEpoch 13/20\n - 25s - loss: 1.0285 - acc: 0.5342\nEpoch 14/20\n - 25s - loss: 1.0282 - acc: 0.5343\nEpoch 15/20\n - 24s - loss: 1.0279 - acc: 0.5345\nEpoch 16/20\n - 24s - loss: 1.0276 - acc: 0.5346\nEpoch 17/20\n - 25s - loss: 1.0273 - acc: 0.5347\nEpoch 18/20\n - 24s - loss: 1.0270 - acc: 0.5349\nEpoch 19/20\n - 24s - loss: 1.0268 - acc: 0.5351\nEpoch 20/20\n - 25s - loss: 1.0265 - acc: 0.5352\n\u003ckeras.callbacks.History at 0x7f7febb3e290\u003e",
+            "type": "TEXT"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-235617_908525176",
+      "dateCreated": "2019-10-25 23:56:17.000",
+      "dateStarted": "2019-10-30 17:54:52.898",
+      "dateFinished": "2019-10-30 18:03:02.961",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    },
+    {
+      "title": "",
+      "text": "",
+      "user": "",
+      "dateUpdated": "2019-10-25 23:57:37.000",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "",
+      "id": "20191025-235737_2100477552",
+      "dateCreated": "2019-10-25 23:57:37.000",
+      "dateStarted": "2019-10-30 18:11:14.000",
+      "dateFinished": "2019-10-30 18:11:14.000",
+      "status": "READY",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 0
+    }
+  ],
+  "name": "hhar",
+  "id": "29abe9950f2c47249d753b5ccdbe6ba8",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {},
+  "info": {}
+}

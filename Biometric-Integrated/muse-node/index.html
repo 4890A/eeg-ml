@@ -12,6 +12,11 @@
     <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
     <!-- Custom fonts for this template -->
     <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
@@ -31,6 +36,10 @@
             display: flex;
             width: 100%;
             align-items: stretch;
+        }
+
+        h3 {
+            color: #4f837f;
         }
 
         h4 {
@@ -62,14 +71,14 @@
 
 <body>
     <header class="masthead" style="background: linear-gradient(to bottom, rgba(22, 22, 22, 0.3) 0%, rgba(22, 22, 22, 0.7) 75%, #161616 100%) !important;>
-        <div class="container d-flex h-100 align-items-center">
-            <div class="mx-auto text-center" style="padding-top: 250px;">
-                <h1 class="mx-auto my-0 text-uppercase">MUSE DEMO</h1>
-                <h2 class="text-white mx-auto mt-2 mb-5">Train a neural network on your own EEG data!
-                </h2>
-                <a href="#" class="btn btn-primary js-scroll-trigger">Home</a>
-                <a href="#electrode-section" class="btn btn-primary js-scroll-trigger">Start</a>
-            </div>
+        <div class=" container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center" style="padding-top: 250px;">
+            <h1 class="mx-auto my-0 text-uppercase">MUSE DEMO</h1>
+            <h2 class="text-white mx-auto mt-2 mb-5">Train a neural network on your own EEG data!
+            </h2>
+            <a href="#" class="btn btn-primary js-scroll-trigger">Home</a>
+            <a href="#blinkStatus" class="btn btn-primary js-scroll-trigger">Start</a>
+        </div>
 
         </div>
     </header>
@@ -90,7 +99,12 @@
             id="accelerometer-z">?</span>
         </div> -->
 
-
+    <h3 id="blinkStatus" style="text-align: center;">
+        <strong style="letter-spacing: .15rem;">
+            <br />
+            Status: Setting Up
+        </strong>
+    </h3>
     <div id="electrode-section" style="justify-content: center; padding: 6rem;">
         <div class="electrode-item">
             <h4><strong>ELECTRODE 1</strong></h4>
@@ -113,32 +127,32 @@
         </div>
     </div>
     <br />
-    <h4 id="blinkStatus" style="text-align: center;">
-        <strong>
-            Status: Setting Up
-        </strong>
-    </h4>
 
     <div class="mx-auto text-center">
         <br />
         <button class="btn btn-primary" onclick="connect()">
-            Connect
+            <span class="glyphicon glyphicon-off"></span> Connect
         </button>
 
         <button class="btn btn-primary" onclick="record()">
-            Record
+            <span class="glyphicon glyphicon-record"></span> Record
         </button>
+
+        <button class="btn btn-primary" onclick="stop()">
+            <span class="glyphicon glyphicon-stop"></span> Stop
+        </button>
+
 
     </div>
     <br />
 
     <div class="mx-auto text-center">
         <button class="btn btn-primary" onclick="classify0()">
-            Classify (0)
+            Classify 0
         </button>
 
         <button class="btn btn-primary" onclick="classify1()">
-            Classify (1)
+            Classify 1
         </button>
 
         <button class="btn btn-primary" onclick="train()">
@@ -150,14 +164,18 @@
         </button>
     </div>
 
-
     <script src="bundle.js"></script>
 
     <!-- Footer -->
     <footer class="bg-black small text-center text-white-50">
-        <div class="container">
-            Copyright &copy; UNC Bootcamp 2019
-        </div>
+        <navbar>
+            <p class="text-center">
+                <a href="https://github.com/4890A/eeg-ml">
+                    <img class='github-logo img-fluid' src="../static/img/GitHub-Mark-32px-custom.png"
+                        alt="GitHub-Mark">
+                </a>
+            </p>
+        </navbar>
     </footer>
 
 </body>

@@ -5,6 +5,10 @@ body {
   /* background: #f1f1f1; */
 }
 
+p {
+	color: white;
+}
+
 
 /* h1 {
   font-size: 80px;

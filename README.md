@@ -1,4 +1,4 @@
-#An Interactive Exploration of Machine Learning in Biometrics
+# An Interactive Exploration of Machine Learning in Biometrics
 
 
 
